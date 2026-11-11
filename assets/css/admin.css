@@ -1,0 +1,28 @@
+/* assets/css/admin.css */
+.admin-sidebar {
+    background-color: #1e293b;
+    min-height: 100vh;
+}
+
+.admin-sidebar .nav-link {
+    color: #cbd5e1;
+    font-weight: 500;
+    padding: 12px 18px;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    transition: all 0.2s ease;
+}
+
+.admin-sidebar .nav-link:hover,
+.admin-sidebar .nav-link.active {
+    background-color: var(--primary-orange);
+    color: #ffffff;
+}
+
+.stat-card {
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
