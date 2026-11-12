@@ -32,7 +32,8 @@ function getDB() {
         // ១. សាកល្បងភ្ជាប់ទៅកាន់ Neon Cloud PostgreSQL (បើមាន Driver)
         if (extension_loaded('pdo_pgsql')) {
             try {
-                $dsn = "pgsql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME . ";sslmode=" . DB_SSLMODE;
+                $endpoint = explode('.', DB_HOST)[0];
+                $dsn = "pgsql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME . ";sslmode=" . DB_SSLMODE . ";options='endpoint=" . $endpoint . "'";
                 $pdo = new PDO($dsn, DB_USER, DB_PASS, [
                     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -51,15 +52,21 @@ function getDB() {
                 }
 
                 return $pdo;
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
+                error_log("Neon connection failed: " . $e->getMessage());
                 // ប្រសិនបើភ្ជាប់ Neon មិនបាន នឹងចូលទៅកាន់ SQLite ស្វ័យប្រវត្តិ
             }
         }
 
         // ២. Auto Fallback ទៅកាន់ SQLite (ធានាដំណើរការ ១០០% គ្រប់កុំព្យូទ័រ មិនបាច់ដំឡើងអ្វីទាំងអស់)
         $dbDir = __DIR__ . '/../database';
-        if (!is_dir($dbDir)) {
-            @mkdir($dbDir, 0755, true);
+        if (!is_writable($dbDir) && (!is_dir($dbDir) || !@touch($dbDir . '/.write_test'))) {
+            $dbDir = sys_get_temp_dir();
+        } else {
+            @unlink($dbDir . '/.write_test');
+            if (!is_dir($dbDir)) {
+                @mkdir($dbDir, 0755, true);
+            }
         }
         $dbFile = $dbDir . '/food_shop.sqlite';
         $isNew = !file_exists($dbFile) || filesize($dbFile) === 0;
