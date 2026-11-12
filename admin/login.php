@@ -104,7 +104,7 @@ $csrfToken = getCsrfToken();
                 <span class="input-group-text"><i class="bi bi-key"></i></span>
                 <input type="password" name="password" class="form-control" required placeholder="••••••••">
             </div>
-            <small class="text-muted" style="font-size: 0.75rem;">Default: admin / Admin@12345</small>
+            <small class="text-muted" style="font-size: 0.75rem;">Default: admin</small>
         </div>
 
         <button type="submit" class="btn btn-orange w-100 py-2 fw-bold">
