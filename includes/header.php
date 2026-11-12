@@ -25,7 +25,7 @@ require_once __DIR__ . '/functions.php';
                 <strong>បើកលក់រាល់ថ្ងៃ៖</strong> ៦:៣០ ព្រឹក ដល់ ៩:០០ យប់
             </span>
             <span class="d-none d-lg-inline opacity-75">|</span>
-            <span class="d-none d-lg-inline opacity-90"><i class="bi bi-bicycle me-1"></i> សេវាដឹកជូនដល់កន្លែងក្នុងភូមិ/ឃុំ</span>
+            <span class="d-none d-lg-inline opacity-90"><i class="bi bi-bicycle me-1"></i> សេវាដឹកជូនដល់កន្លែងក្នុងឃុំស៊ាងឃ្វាង/ត្របែក</span>
         </div>
         <div class="d-flex align-items-center gap-2">
             <a href="https://t.me/<?= ltrim(TELEGRAM_USERNAME, '@') ?>" target="_blank" class="phone-pill" style="background: rgba(34, 158, 217, 0.25); border-color: rgba(34, 158, 217, 0.5);">
