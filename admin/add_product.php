@@ -109,22 +109,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         )
                     ";
 
-                    $stmt = $pdo->prepare($sql);
+                    try {
+                        $stmt = $pdo->prepare($sql);
 
-                    $stmt->execute([
-                        ':cat'       => $category_id,
-                        ':n_kh'      => $name_kh,
-                        ':n_en'      => $name_en,
-                        ':d_kh'      => $description_kh,
-                        ':d_en'      => $description_en,
-                        ':price'     => $price,
-                        ':img'       => $imageName,
-                        ':available' => $is_available,
-                        ':featured'  => $is_featured
-                    ]);
+                        $stmt->bindValue(':cat', $category_id, PDO::PARAM_INT);
+                        $stmt->bindValue(':n_kh', $name_kh, PDO::PARAM_STR);
+                        $stmt->bindValue(':n_en', $name_en, PDO::PARAM_STR);
+                        $stmt->bindValue(':d_kh', $description_kh, PDO::PARAM_STR);
+                        $stmt->bindValue(':d_en', $description_en, PDO::PARAM_STR);
+                        $stmt->bindValue(':price', $price, PDO::PARAM_INT);
+                        $stmt->bindValue(':img', $imageName, PDO::PARAM_STR);
+                        $stmt->bindValue(':available', $is_available, PDO::PARAM_BOOL);
+                        $stmt->bindValue(':featured', $is_featured, PDO::PARAM_BOOL);
 
-                    header('Location: products.php');
-                    exit;
+                        $stmt->execute();
+
+                        header('Location: products.php');
+                        exit;
+                    } catch (PDOException $e) {
+                        $error = 'មានបញ្ហាក្នុងការរក្សាទុកទិន្នន័យ៖ ' . $e->getMessage();
+                    }
                 }
             }
         }
