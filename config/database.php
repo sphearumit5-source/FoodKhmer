@@ -26,6 +26,9 @@ define('DB_USER', 'neondb_owner');
 define('DB_PASS', 'npg_pbCl6rhVwon7');
 define('DB_SSLMODE', 'require');
 
+// Authentication Secret Key សម្រាប់ Serverless Cookie Security
+define('AUTH_SECRET', hash('sha256', DB_PASS . '_food_khmer_secure_salt_2026'));
+
 function getDB() {
     static $pdo = null;
     if ($pdo === null) {
@@ -49,6 +52,22 @@ function getDB() {
                         $sql = preg_replace('/^\xEF\xBB\xBF/', '', $sql);
                         $pdo->exec($sql);
                     }
+                }
+
+                // ធានាថាមាន Table admins និងគណនី Admin លំនាំដើម
+                $pdo->exec("CREATE TABLE IF NOT EXISTS admins (
+                    admin_id SERIAL PRIMARY KEY,
+                    username VARCHAR(100) UNIQUE NOT NULL,
+                    password_hash VARCHAR(255) NOT NULL,
+                    full_name VARCHAR(150) NOT NULL,
+                    phone VARCHAR(50),
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )");
+                $adminCount = (int)$pdo->query("SELECT COUNT(*) FROM admins")->fetchColumn();
+                if ($adminCount === 0) {
+                    $defaultHash = password_hash('admin123', PASSWORD_DEFAULT);
+                    $ins = $pdo->prepare("INSERT INTO admins (username, password_hash, full_name, phone) VALUES (?, ?, ?, ?)");
+                    $ins->execute(['admin', $defaultHash, 'អ្នកគ្រប់គ្រងហាង', PHONE_1]);
                 }
 
                 return $pdo;

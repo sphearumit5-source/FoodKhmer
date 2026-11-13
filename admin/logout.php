@@ -12,6 +12,14 @@ if (ini_get("session.use_cookies")) {
     );
 }
 
+// លុប Serverless Auth Cookie
+setcookie('admin_auth', '', [
+    'expires'  => time() - 86400,
+    'path'     => '/',
+    'httponly' => true,
+    'samesite' => 'Lax'
+]);
+
 session_destroy();
 header('Location: login.php');
 exit;

@@ -11,25 +11,43 @@ function e($value) {
 }
 
 /**
- * បង្កើត CSRF Token
+ * បង្កើត CSRF Token (Serverless & Session Compatible)
  */
 function getCsrfToken() {
     if (empty($_SESSION['csrf_token'])) {
-        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        if (!empty($_COOKIE['csrf_token'])) {
+            $_SESSION['csrf_token'] = $_COOKIE['csrf_token'];
+        } else {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+            if (!headers_sent()) {
+                @setcookie('csrf_token', $_SESSION['csrf_token'], [
+                    'expires'  => time() + 86400,
+                    'path'     => '/',
+                    'httponly' => true,
+                    'samesite' => 'Lax'
+                ]);
+            }
+        }
     }
-
     return $_SESSION['csrf_token'];
 }
 
 /**
- * ផ្ទៀងផ្ទាត់ CSRF Token
+ * ផ្ទៀងផ្ទាត់ CSRF Token (ផ្ទៀងផ្ទាត់ទាំង Session និង Cookie)
  */
 function verifyCsrfToken($token) {
-    if (empty($_SESSION['csrf_token']) || empty($token)) {
+    if (empty($token)) {
         return false;
     }
-
-    return hash_equals($_SESSION['csrf_token'], $token);
+    $sessionToken = $_SESSION['csrf_token'] ?? '';
+    $cookieToken = $_COOKIE['csrf_token'] ?? '';
+    if (!empty($sessionToken) && hash_equals($sessionToken, $token)) {
+        return true;
+    }
+    if (!empty($cookieToken) && hash_equals($cookieToken, $token)) {
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -41,11 +59,31 @@ function formatPrice($price) {
 }
 
 /**
- * ពិនិត្យថា Admin បាន Login ឬនៅ
+ * ពិនិត្យថា Admin បាន Login ឬនៅ (គាំទ្រទាំង Session និង Secure Signed Cookie លើ Serverless)
  */
 function isAdminLoggedIn() {
-    return isset($_SESSION['admin_logged_in'])
-        && $_SESSION['admin_logged_in'] === true;
+    if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
+        return true;
+    }
+
+    if (!empty($_COOKIE['admin_auth']) && defined('AUTH_SECRET')) {
+        $parts = explode('.', $_COOKIE['admin_auth'], 2);
+        if (count($parts) === 2) {
+            list($payload, $sig) = $parts;
+            if (hash_equals(hash_hmac('sha256', $payload, AUTH_SECRET), $sig)) {
+                $data = json_decode(base64_decode($payload), true);
+                if ($data && isset($data['exp']) && $data['exp'] > time()) {
+                    $_SESSION['admin_logged_in'] = true;
+                    $_SESSION['admin_id'] = $data['id'];
+                    $_SESSION['admin_username'] = $data['user'];
+                    $_SESSION['admin_name'] = $data['name'];
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
 }
 
 /**
