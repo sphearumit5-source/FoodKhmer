@@ -276,7 +276,7 @@ $catIcons = [
                         class="category-pill <?= $selectedCategory === 'all' ? 'active' : '' ?>"
                     >
 
-                        ✨ ទាំងអស់ (All)
+                        ✨ ទាំងអស់
 
                     </a>
 
@@ -298,8 +298,6 @@ $catIcons = [
                             <?= $icon ?>
 
                             <?= e($cat['name_kh']) ?>
-
-                            (<?= e($cat['name_en']) ?>)
 
                         </a>
 
@@ -487,14 +485,6 @@ $catIcons = [
                                 </h3>
 
 
-                                <!-- English Name -->
-                                <div class="product-subtitle">
-
-                                    <?= e($p['name_en']) ?>
-
-                                </div>
-
-
                                 <!-- Description -->
                                 <p class="product-desc">
 
@@ -516,10 +506,10 @@ $catIcons = [
 
                                         <small
                                             class="text-muted d-block"
-                                            style="font-size: 0.72rem;"
+                                            style="font-size: 0.75rem;"
                                         >
 
-                                            តម្លៃ / Price
+                                            តម្លៃ
 
                                         </small>
 
@@ -573,9 +563,9 @@ $catIcons = [
                                                 data-image="<?= e($imgPath) ?>"
                                             >
 
-                                                <i class="bi bi-telegram"></i>
+                                                <i class="bi bi-telegram me-1"></i>
 
-                                                Order
+                                                កុម្ម៉ង់
 
                                             </button>
 

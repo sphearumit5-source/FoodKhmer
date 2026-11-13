@@ -51,7 +51,7 @@
 
         <div class="d-flex flex-wrap justify-content-between align-items-center pt-3 small text-white-50">
             <p class="mb-0">&copy; <?= date('Y') ?> <strong><?= SHOP_NAME ?></strong>. រក្សាសិទ្ធិគ្រប់យ៉ាង។</p>
-            <p class="mb-0">Powered by PHP & Neon PostgreSQL</p>
+            <p class="mb-0">ហាងលក់ម្ហូបអាហារ និងភេសជ្ជៈខ្មែរ</p>
         </div>
     </div>
 </footer>
@@ -77,7 +77,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label fw-bold small text-muted">ចំនួនកុម្ម៉ង់ (QUANTITY)៖</label>
+                    <label class="form-label fw-bold small text-muted">ចំនួនកុម្ម៉ង់ ៖</label>
                     <div class="d-flex align-items-center gap-2">
                         <button class="btn btn-outline-secondary qty-control-btn" type="button" id="btnQtyMinus"><i class="bi bi-dash-lg"></i></button>
                         <input type="number" id="orderQty" class="form-control text-center fw-bold fs-5" value="1" min="1" max="50" style="max-width: 90px; border-radius: 12px;">
@@ -85,19 +85,87 @@
                     </div>
                 </div>
 
+                <!-- ជម្រើសរសជាតិ (ហិរ, ផ្អែម, ប្រៃ) -->
+                <div class="p-3 bg-light rounded-4 border mb-3">
+                    <!-- កម្រិតហិរ -->
+                    <div class="taste-option-title">
+                        <i class="bi bi-fire text-danger"></i> កម្រិតជាតិហិរ ៖
+                    </div>
+                    <div class="taste-chip-group">
+                        <label class="taste-chip">
+                            <input type="radio" name="spice_level" value="មិនហិរ" checked>
+                            <span>មិនហិរ</span>
+                        </label>
+                        <label class="taste-chip">
+                            <input type="radio" name="spice_level" value="ហិរតិច">
+                            <span>ហិរតិច</span>
+                        </label>
+                        <label class="taste-chip">
+                            <input type="radio" name="spice_level" value="ហិរល្មម">
+                            <span>ហិរល្មម</span>
+                        </label>
+                        <label class="taste-chip">
+                            <input type="radio" name="spice_level" value="ហិរខ្លាំង">
+                            <span>ហិរខ្លាំង</span>
+                        </label>
+                    </div>
+
+                    <!-- កម្រិតផ្អែម -->
+                    <div class="taste-option-title">
+                        <i class="bi bi-cup-straw text-primary"></i> កម្រិតជាតិផ្អែម ៖
+                    </div>
+                    <div class="taste-chip-group">
+                        <label class="taste-chip">
+                            <input type="radio" name="sweet_level" value="ផ្អែមល្មម" checked>
+                            <span>ផ្អែមល្មម</span>
+                        </label>
+                        <label class="taste-chip">
+                            <input type="radio" name="sweet_level" value="ផ្អែមតិច">
+                            <span>ផ្អែមតិច</span>
+                        </label>
+                        <label class="taste-chip">
+                            <input type="radio" name="sweet_level" value="មិនផ្អែម">
+                            <span>មិនផ្អែម</span>
+                        </label>
+                        <label class="taste-chip">
+                            <input type="radio" name="sweet_level" value="ផ្អែមខ្លាំង">
+                            <span>ផ្អែមខ្លាំង</span>
+                        </label>
+                    </div>
+
+                    <!-- កម្រិតប្រៃ -->
+                    <div class="taste-option-title">
+                        <i class="bi bi-droplet-half text-secondary"></i> កម្រិតជាតិប្រៃ ៖
+                    </div>
+                    <div class="taste-chip-group mb-0">
+                        <label class="taste-chip">
+                            <input type="radio" name="salt_level" value="រសជាតិល្មម" checked>
+                            <span>រសជាតិល្មម</span>
+                        </label>
+                        <label class="taste-chip">
+                            <input type="radio" name="salt_level" value="ប្រៃតិច / សាប">
+                            <span>ប្រៃតិច / សាប</span>
+                        </label>
+                        <label class="taste-chip">
+                            <input type="radio" name="salt_level" value="ប្រៃដិត">
+                            <span>ប្រៃដិត</span>
+                        </label>
+                    </div>
+                </div>
+
                 <div class="mb-3">
-                    <label class="form-label fw-bold small text-muted">ចំណាំបន្ថែម (SPECIAL NOTE)៖</label>
-                    <textarea id="orderNote" class="form-control rounded-3" rows="2" placeholder="ឧ. មិនដាក់ហិរ, ទឹកកកច្រើន, ដាក់ថង់ដាច់ដោយឡែក..."></textarea>
+                    <label class="form-label fw-bold small text-muted">ចំណាំបន្ថែមផ្សេងៗ ៖</label>
+                    <textarea id="orderNote" class="form-control rounded-3" rows="2" placeholder="ឧ. មិនដាក់ប៊ីចេង, ទឹកកកច្រើន, ដាក់ថង់ដាច់ដោយឡែក..."></textarea>
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center p-3 rounded-4 mb-3" style="background:#fff7ed; border:1px solid #fed7aa;">
-                    <span class="fw-bold text-dark">តម្លៃសរុប (Total)៖</span>
-                    <span class="h3 text-orange fw-bold mb-0" id="modalTotalPrice">$0.00</span>
+                    <span class="fw-bold text-dark">តម្លៃសរុប ៖</span>
+                    <span class="h3 text-orange fw-bold mb-0" id="modalTotalPrice">0 ៛</span>
                 </div>
 
                 <div class="p-2 px-3 bg-light border rounded-3 small text-muted">
                     <i class="bi bi-info-circle-fill text-primary me-1"></i>
-                    នៅពេលចុចខាងក្រោម ប្រព័ន្ធនឹងបើកកម្មវិធី <strong>Telegram</strong> ដោយសរសេរសារកុម្ម៉ង់ជូនរួចជាស្រេច!
+                    នៅពេលចុចខាងក្រោម ប្រព័ន្ធនឹងបើកកម្មវិធី <strong>Telegram</strong> ដោយសរសេរសារកុម្ម៉ង់ និងចំណាំរសជាតិជូនរួចជាស្រេច!
                 </div>
             </div>
             <div class="modal-footer bg-light border-0">

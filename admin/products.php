@@ -34,17 +34,17 @@ $csrfToken = getCsrfToken();
             <div class="d-flex align-items-center gap-2 mb-4 pb-3 border-bottom border-secondary">
                 <span class="brand-icon text-orange"><i class="bi bi-cup-hot-fill"></i></span>
                 <div>
-                    <h6 class="mb-0 fw-bold text-white">Admin Panel</h6>
+                    <h6 class="mb-0 fw-bold text-white">ផ្ទាំងគ្រប់គ្រង Admin</h6>
                     <small class="text-muted"><?= e($_SESSION['admin_name']) ?></small>
                 </div>
             </div>
 
             <ul class="nav flex-column mb-auto">
-                <li class="nav-item"><a href="dashboard.php" class="nav-link"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
+                <li class="nav-item"><a href="dashboard.php" class="nav-link"><i class="bi bi-speedometer2 me-2"></i> ផ្ទាំងគ្រប់គ្រង</a></li>
                 <li class="nav-item"><a href="products.php" class="nav-link active"><i class="bi bi-box-seam me-2"></i> មុខម្ហូប/ភេសជ្ជៈ</a></li>
                 <li class="nav-item"><a href="add_product.php" class="nav-link"><i class="bi bi-plus-circle me-2"></i> បន្ថែមមុខម្ហូបថ្មី</a></li>
-                <li class="nav-item mt-4 pt-3 border-top border-secondary"><a href="../index.php" target="_blank" class="nav-link text-info"><i class="bi bi-box-arrow-up-right me-2"></i> មើល Website</a></li>
-                <li class="nav-item"><a href="logout.php" class="nav-link text-danger"><i class="bi bi-box-arrow-right me-2"></i> ចាកចេញ (Logout)</a></li>
+                <li class="nav-item mt-4 pt-3 border-top border-secondary"><a href="../index.php" target="_blank" class="nav-link text-info"><i class="bi bi-box-arrow-up-right me-2"></i> មើលគេហទំព័រ</a></li>
+                <li class="nav-item"><a href="logout.php" class="nav-link text-danger"><i class="bi bi-box-arrow-right me-2"></i> ចាកចេញ</a></li>
             </ul>
         </nav>
 
@@ -73,9 +73,9 @@ $csrfToken = getCsrfToken();
                             <tr>
                                 <th style="width: 70px;">រូបភាព</th>
                                 <th>ឈ្មោះម្ហូប (ខ្មែរ)</th>
-                                <th>Product Name (EN)</th>
+                                <th>ឈ្មោះជាអង់គ្លេស</th>
                                 <th>ប្រភេទ</th>
-                                <th>តម្លៃ ($)</th>
+                                <th>តម្លៃ (៛)</th>
                                 <th>ស្ថានភាព</th>
                                 <th class="text-end">សកម្មភាព</th>
                             </tr>

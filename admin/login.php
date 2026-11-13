@@ -91,7 +91,7 @@ $csrfToken = getCsrfToken();
         <input type="hidden" name="csrf_token" value="<?= e($csrfToken) ?>">
 
         <div class="mb-3">
-            <label class="form-label fw-semibold small">ឈ្មោះចូលប្រព័ន្ធ (Username)</label>
+            <label class="form-label fw-semibold small">ឈ្មោះគណនី</label>
             <div class="input-group">
                 <span class="input-group-text"><i class="bi bi-person"></i></span>
                 <input type="text" name="username" class="form-control" required placeholder="admin" autofocus>
@@ -99,12 +99,12 @@ $csrfToken = getCsrfToken();
         </div>
 
         <div class="mb-4">
-            <label class="form-label fw-semibold small">ពាក្យសម្ងាត់ (Password)</label>
+            <label class="form-label fw-semibold small">ពាក្យសម្ងាត់</label>
             <div class="input-group">
                 <span class="input-group-text"><i class="bi bi-key"></i></span>
                 <input type="password" name="password" class="form-control" required placeholder="••••••••">
             </div>
-            <small class="text-muted" style="font-size: 0.75rem;">Default: admin</small>
+            <small class="text-muted" style="font-size: 0.75rem;">គណនីលំនាំដើម៖ admin</small>
         </div>
 
         <button type="submit" class="btn btn-orange w-100 py-2 fw-bold">

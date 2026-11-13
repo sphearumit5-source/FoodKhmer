@@ -48,6 +48,16 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('orderQty').value = 1;
             document.getElementById('orderNote').value = '';
 
+            // កំណត់តម្លៃលំនាំដើមសម្រាប់ជម្រើសរសជាតិ
+            const defaultSpice = document.querySelector('input[name="spice_level"][value="មិនហិរ"]');
+            if (defaultSpice) defaultSpice.checked = true;
+
+            const defaultSweet = document.querySelector('input[name="sweet_level"][value="ផ្អែមល្មម"]');
+            if (defaultSweet) defaultSweet.checked = true;
+
+            const defaultSalt = document.querySelector('input[name="salt_level"][value="រសជាតិល្មម"]');
+            if (defaultSalt) defaultSalt.checked = true;
+
             updateTotalPrice();
 
             if (orderModal) {
@@ -126,6 +136,9 @@ document.addEventListener('DOMContentLoaded', function () {
             );
 
             const note = document.getElementById('orderNote').value.trim();
+            const spiceLevel = document.querySelector('input[name="spice_level"]:checked')?.value || 'មិនហិរ';
+            const sweetLevel = document.querySelector('input[name="sweet_level"]:checked')?.value || 'ផ្អែមល្មម';
+            const saltLevel = document.querySelector('input[name="salt_level"]:checked')?.value || 'រសជាតិល្មម';
 
             const totalPrice = selectedProduct.price * qty;
 
@@ -134,10 +147,15 @@ document.addEventListener('DOMContentLoaded', function () {
             msg += `🍽️ *មុខម្ហូប/ភេសជ្ជៈ:* ${selectedProduct.name}\n`;
             msg += `🔢 *ចំនួន:* ${qty}\n`;
             msg += `💵 *តម្លៃឯកតា:* ${formatKHR(selectedProduct.price)}\n`;
-            msg += `💰 *តម្លៃសរុប:* ${formatKHR(totalPrice)}\n`;
+            msg += `💰 *តម្លៃសរុប:* ${formatKHR(totalPrice)}\n\n`;
+
+            msg += `📋 *ចំណាំរសជាតិ & គ្រឿងផ្សំ៖*\n`;
+            msg += `• 🌶️ ជាតិហិរ៖ ${spiceLevel}\n`;
+            msg += `• 🍬 ជាតិផ្អែម៖ ${sweetLevel}\n`;
+            msg += `• 🧂 ជាតិប្រៃ៖ ${saltLevel}\n`;
 
             if (note) {
-                msg += `📝 *ចំណាំបន្ថែម:* ${note}\n`;
+                msg += `• 📝 ចំណាំបន្ថែម៖ ${note}\n`;
             }
 
             msg += `\n📍 សូមជួយផ្ញើទីតាំង និងដឹកជូនខ្ញុំផង។ សូមអរគុណ!`;

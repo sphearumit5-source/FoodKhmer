@@ -206,7 +206,7 @@ $csrfToken = getCsrfToken();
 
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">
-                        ឈ្មោះជាភាសាអង់គ្លេស (EN)
+                        ឈ្មោះជាភាសាអង់គ្លេស
                         <span class="text-danger">*</span>
                     </label>
 
@@ -215,7 +215,7 @@ $csrfToken = getCsrfToken();
                         name="name_en"
                         class="form-control"
                         required
-                        placeholder="e.g. Pork Fried Rice"
+                        placeholder="ឧ. Pork Fried Rice"
                     >
                 </div>
 
@@ -225,7 +225,7 @@ $csrfToken = getCsrfToken();
 
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">
-                        ប្រភេទ (Category)
+                        ប្រភេទមុខម្ហូប/ភេសជ្ជៈ
                         <span class="text-danger">*</span>
                     </label>
 
@@ -239,7 +239,6 @@ $csrfToken = getCsrfToken();
 
                             <option value="<?= e($c['category_id']) ?>">
                                 <?= e($c['name_kh']) ?>
-                                (<?= e($c['name_en']) ?>)
                             </option>
 
                         <?php endforeach; ?>
@@ -291,14 +290,14 @@ $csrfToken = getCsrfToken();
 
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">
-                        Description (EN)
+                        ការពិពណ៌នាជាភាសាអង់គ្លេស (បើមាន)
                     </label>
 
                     <textarea
                         name="description_en"
                         class="form-control"
                         rows="3"
-                        placeholder="Describe the taste or ingredients..."
+                        placeholder="ព័ត៌មានលម្អិត ឬគ្រឿងផ្សំ..."
                     ></textarea>
                 </div>
 

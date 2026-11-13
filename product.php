@@ -134,25 +134,15 @@ $price = number_format((float)$product['price'], 0, '.', ',') . ' ៛';
 
                         <?= e($product['cat_name_kh']) ?>
 
-                        (<?= e($product['cat_name_en']) ?>)
-
                     </span>
 
 
                     <!-- Khmer Product Name -->
-                    <h2 class="fw-bold mb-1">
+                    <h2 class="fw-bold mb-3">
 
                         <?= e($product['name_kh']) ?>
 
                     </h2>
-
-
-                    <!-- English Product Name -->
-                    <h5 class="text-muted mb-3">
-
-                        <?= e($product['name_en']) ?>
-
-                    </h5>
 
 
                     <!-- Price in Cambodian Riel -->
