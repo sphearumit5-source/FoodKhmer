@@ -560,6 +560,8 @@ $catIcons = [
 
                                                 data-category="<?= e($p['cat_name_kh']) ?>"
 
+                                                data-category-slug="<?= e($p['cat_slug']) ?>"
+
                                                 data-image="<?= e($imgPath) ?>"
                                             >
 

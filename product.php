@@ -17,7 +17,8 @@ $stmt = $pdo->prepare("
     SELECT
         p.*,
         c.name_kh AS cat_name_kh,
-        c.name_en AS cat_name_en
+        c.name_en AS cat_name_en,
+        c.slug AS cat_slug
     FROM products p
     JOIN categories c
         ON p.category_id = c.category_id
@@ -217,6 +218,8 @@ $price = number_format((float)$product['price'], 0, '.', ',') . ' ៛';
                             data-currency="KHR"
 
                             data-category="<?= e($product['cat_name_kh']) ?>"
+
+                            data-category-slug="<?= e($product['cat_slug']) ?>"
 
                             data-image="<?= e($imgPath) ?>"
                         >

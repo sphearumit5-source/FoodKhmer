@@ -52,9 +52,17 @@ require_once __DIR__ . '/functions.php';
             </div>
         </a>
 
-        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <div class="d-flex align-items-center gap-2">
+            <!-- Mobile Quick Cart Button -->
+            <button class="btn btn-orange btn-sm d-lg-none position-relative px-3 py-2 btn-open-cart rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-label="Cart">
+                <i class="bi bi-cart3"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-badge" style="display:none; font-size:0.7rem;">0</span>
+            </button>
+
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
 
         <div class="collapse navbar-collapse" id="navMenu">
             <ul class="navbar-nav ms-auto align-items-lg-center gap-1 mt-3 mt-lg-0">
@@ -71,6 +79,13 @@ require_once __DIR__ . '/functions.php';
                     <a class="nav-link text-primary fw-semibold" href="https://t.me/<?= ltrim(TELEGRAM_USERNAME, '@') ?>" target="_blank">
                         <i class="bi bi-telegram me-1"></i> Telegram
                     </a>
+                </li>
+                <!-- Desktop Cart Button -->
+                <li class="nav-item ms-lg-2 d-none d-lg-block">
+                    <button class="btn btn-orange btn-sm position-relative px-3 py-2 btn-open-cart rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                        <i class="bi bi-cart3 me-1"></i> កន្ត្រក
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-badge" style="display:none; font-size:0.72rem;">0</span>
+                    </button>
                 </li>
                 <li class="nav-item ms-lg-2">
                     <a class="btn btn-outline-orange btn-sm" href="admin/login.php">
