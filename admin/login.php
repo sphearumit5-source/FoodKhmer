@@ -40,7 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             if ($isValid) {
-                session_regenerate_id(true);
+                if (!headers_sent()) {
+                    @session_regenerate_id(true);
+                }
                 $_SESSION['admin_logged_in'] = true;
                 $_SESSION['admin_id'] = $admin['admin_id'];
                 $_SESSION['admin_username'] = $admin['username'];
@@ -55,16 +57,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'exp'  => time() + (86400 * 7)
                     ]));
                     $sig = hash_hmac('sha256', $payload, AUTH_SECRET);
-                    @setcookie('admin_auth', $payload . '.' . $sig, [
-                        'expires'  => time() + (86400 * 7),
-                        'path'     => '/',
-                        'httponly' => true,
-                        'samesite' => 'Lax'
-                    ]);
+                    if (!headers_sent()) {
+                        @setcookie('admin_auth', $payload . '.' . $sig, [
+                            'expires'  => time() + (86400 * 7),
+                            'path'     => '/',
+                            'httponly' => true,
+                            'samesite' => 'Lax'
+                        ]);
+                    }
                 }
 
-                header('Location: dashboard.php');
-                exit;
+                if (!headers_sent()) {
+                    header('Location: dashboard.php');
+                    exit;
+                } else {
+                    echo "<script>window.location.href = 'dashboard.php';</script>";
+                    exit;
+                }
             } else {
                 $error = 'Username ឬ Password មិនត្រឹមត្រូវឡើយ!';
             }

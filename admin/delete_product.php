@@ -1,4 +1,3 @@
-
 <?php
 // admin/delete_product.php
 

@@ -1,4 +1,3 @@
-
 <?php
 // admin/edit_product.php
 

@@ -1,4 +1,3 @@
-
 <?php
 // init_db.php
 // រៀបចំ Tables ក្នុង Neon PostgreSQL ដោយស្វ័យប្រវត្តិ
