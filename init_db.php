@@ -1,170 +1,181 @@
+
 <?php
 // init_db.php
-// រៀបចំ Tables ក្នុង Neon PostgreSQL ដោយស្វ័យប្រវត្តិ
+// Neon PostgreSQL Database Installer
 
 require_once __DIR__ . '/config/database.php';
 
-// HTML Header
-echo "
-<!DOCTYPE html>
-<html lang='km'>
-<head>
-    <meta charset='UTF-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>Database Installation</title>
-</head>
-<body style='
-    font-family: sans-serif;
-    background: #f1f5f9;
-    padding: 20px;
-'>
-";
+// Prevent caching
+header('Cache-Control: no-store, no-cache, must-revalidate');
 
-echo "
-<div style='
-    max-width: 700px;
-    margin: 40px auto;
-    padding: 30px;
-    background: #ffffff;
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-'>
-";
+function output($title, $message, $success = true) {
+    $color = $success ? '#166534' : '#991b1b';
+    $background = $success ? '#dcfce7' : '#fee2e2';
 
-echo "
-<h2 style='color:#ff6b00;'>
-    រៀបចំ Database លើ Neon PostgreSQL
-</h2>
-";
-
-try {
-
-    // 1. Connect Database
-    $pdo = getDB();
-
-    // 2. Check SQL File
-    $sqlFile = __DIR__ . '/database/SimpleFoodShop.sql';
-
-    if (!file_exists($sqlFile)) {
-        throw new Exception(
-            'រកមិនឃើញឯកសារ database/SimpleFoodShop.sql ទេ!'
-        );
-    }
-
-    // 3. Read SQL File
-    $sql = file_get_contents($sqlFile);
-
-    if ($sql === false || trim($sql) === '') {
-        throw new Exception(
-            'មិនអាចអានឯកសារ SQL ឬឯកសារទទេ!'
-        );
-    }
-
-    // 4. Remove UTF-8 BOM
-    $sql = preg_replace('/^\xEF\xBB\xBF/', '', $sql);
-
-    // 5. Execute SQL
-    $pdo->exec($sql);
-
-    // 6. Success Message
-    echo "
-    <div style='
-        padding: 20px;
-        background: #dcfce7;
-        color: #166534;
-        border-radius: 8px;
-        margin-top: 20px;
-    '>
-        <h3>✅ ដំណើរការជោគជ័យ!</h3>
-
-        <p>
-            Database Tables និងទិន្នន័យគំរូ
-            ត្រូវបានបង្កើតរួចរាល់លើ Neon PostgreSQL។
-        </p>
-    </div>
-    ";
-
-    // 7. Admin Account Information
-    echo "
-    <div style='
-        margin-top: 20px;
-        padding: 20px;
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
-        border-radius: 8px;
-    '>
-
-        <h3>គណនី Admin លំនាំដើម</h3>
-
-        <p>
-            Username:
-            <strong>admin</strong>
-        </p>
-
-        <p>
-            Password:
-            <strong>Admin@12345</strong>
-        </p>
-
-        <p style='color:#dc2626;font-size:13px;'>
-            សូមប្ដូរ Password បន្ទាប់ពីដំឡើងរួច។
-        </p>
-
-    </div>
-    ";
-
-    // 8. Website Button
-    echo "
-    <div style='margin-top:25px;'>
-
-        <a href='index.php'
-           style='
-                display:inline-block;
-                padding:12px 24px;
-                background:#ff6b00;
-                color:#ffffff;
-                text-decoration:none;
-                border-radius:6px;
-                font-weight:bold;
-           '>
-
-            ចូលទៅកាន់គេហទំព័រ
-
-        </a>
-
-    </div>
-    ";
-
-} catch (Throwable $e) {
-
-    // Error Message
-    echo "
-    <div style='
+    echo '<div style="
         padding:20px;
-        background:#fee2e2;
-        color:#991b1b;
-        border-radius:8px;
+        background:' . $background . ';
+        color:' . $color . ';
+        border-radius:10px;
         margin-top:20px;
-    '>
+    ">';
 
-        <h3>❌ មានកំហុសក្នុងការរៀបចំ Database!</h3>
+    echo '<h3>' . ($success ? '✅ ' : '❌ ') .
+         htmlspecialchars($title, ENT_QUOTES, 'UTF-8') .
+         '</h3>';
 
-        <p>"
-            . htmlspecialchars(
-                $e->getMessage(),
-                ENT_QUOTES,
-                'UTF-8'
-            )
-        . "</p>
+    echo '<p>' .
+         htmlspecialchars($message, ENT_QUOTES, 'UTF-8') .
+         '</p>';
 
-    </div>
-    ";
-
+    echo '</div>';
 }
+?>
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodKhmer Database Installation</title>
 
-echo "
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Kantumruy Pro', sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 5px 25px rgba(0,0,0,.06);
+        }
+
+        h2 {
+            color: #f97316;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #f97316;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #ea580c;
+        }
+
+        .warning {
+            background: #fff7ed;
+            color: #9a3412;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h2>FoodKhmer Database Installer</h2>
+
+    <p>រៀបចំ Database នៅលើ Neon PostgreSQL</p>
+
+    <?php
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        try {
+
+            // Connect database
+            $pdo = getDB();
+
+            // SQL file location
+            $sqlFile = __DIR__ . '/database/SimpleFoodShop.sql';
+
+            if (!is_file($sqlFile)) {
+                throw new Exception(
+                    'រកមិនឃើញ database/SimpleFoodShop.sql'
+                );
+            }
+
+            // Read SQL
+            $sql = file_get_contents($sqlFile);
+
+            if ($sql === false || trim($sql) === '') {
+                throw new Exception('SQL File ទទេ ឬមិនអាចអានបាន។');
+            }
+
+            // Remove UTF-8 BOM
+            $sql = preg_replace('/^\xEF\xBB\xBF/', '', $sql);
+
+            // Execute SQL
+            $pdo->exec($sql);
+
+            output(
+                'Database ដំណើរការជោគជ័យ!',
+                'Tables និងទិន្នន័យដែលមានក្នុង SQL File ត្រូវបានដំណើរការ។'
+            );
+
+            echo '
+                <div style="margin-top:20px">
+                    <a href="index.php" class="btn">
+                        ចូលទៅកាន់គេហទំព័រ
+                    </a>
+                </div>
+            ';
+
+            echo '
+                <div class="warning">
+                    <strong>សុវត្ថិភាព៖</strong>
+                    សូមបិទ ឬលុប init_db.php ចេញពី Server
+                    បន្ទាប់ពីដំឡើងរួច។
+                </div>
+            ';
+
+        } catch (Throwable $e) {
+
+            error_log('Database installation error: ' . $e->getMessage());
+
+            output(
+                'មានបញ្ហាក្នុងការដំឡើង Database',
+                'សូមពិនិត្យ Database Connection និង SQL File។',
+                false
+            );
+        }
+    } else {
+    ?>
+
+        <div class="warning">
+            <strong>សូមប្រុងប្រយ័ត្ន!</strong>
+            ឯកសារនេះនឹងដំណើរការ SQL ទៅលើ Database។
+            សូម Backup ទិន្នន័យជាមុន។
+        </div>
+
+        <form method="POST">
+            <button type="submit" class="btn">
+                <i>⚙</i> ចាប់ផ្ដើមដំឡើង Database
+            </button>
+        </form>
+
+    <?php } ?>
+
 </div>
+
 </body>
 </html>
-";
