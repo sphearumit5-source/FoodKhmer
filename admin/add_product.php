@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         $stmt->execute();
 
-                        header('Location: products.php');
+                        header('Location: dashboard.php?msg=saved');
                         exit;
                     } catch (PDOException $e) {
                         $error = 'មានបញ្ហាក្នុងការរក្សាទុកទិន្នន័យ៖ ' . $e->getMessage();
@@ -160,9 +160,9 @@ $csrfToken = getCsrfToken();
 <div class="container py-4" style="max-width: 850px;">
 
     <div class="mb-4">
-        <a href="products.php" class="text-decoration-none text-muted small">
+        <a href="dashboard.php" class="text-decoration-none text-muted small">
             <i class="bi bi-arrow-left"></i>
-            ត្រឡប់ទៅបញ្ជីផលិតផល
+            ត្រឡប់ទៅផ្ទាំងគ្រប់គ្រងស្តុក
         </a>
 
         <h4 class="fw-bold mt-1">
@@ -369,7 +369,7 @@ $csrfToken = getCsrfToken();
                     រក្សាទុក
                 </button>
 
-                <a href="products.php" class="btn btn-outline-secondary px-3">
+                <a href="dashboard.php" class="btn btn-outline-secondary px-3">
                     បោះបង់
                 </a>
 

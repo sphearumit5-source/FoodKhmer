@@ -276,7 +276,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         }
 
                         // Redirect
-                        header('Location: products.php');
+                        header('Location: dashboard.php?msg=saved');
                         exit;
 
                     } catch (PDOException $e) {
@@ -397,13 +397,13 @@ $csrfToken = getCsrfToken();
     <div class="mb-4">
 
         <a
-            href="products.php"
+            href="dashboard.php"
             class="text-decoration-none text-muted small"
         >
 
             <i class="bi bi-arrow-left"></i>
 
-            ត្រឡប់ទៅបញ្ជីផលិតផល
+            ត្រឡប់ទៅផ្ទាំងគ្រប់គ្រងស្តុក
 
         </a>
 
@@ -766,7 +766,7 @@ $csrfToken = getCsrfToken();
 
 
                 <a
-                    href="products.php"
+                    href="dashboard.php"
                     class="btn btn-outline-secondary px-3"
                 >
 

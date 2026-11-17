@@ -1,4 +1,3 @@
-
 <?php
 // init_db.php
 // Neon PostgreSQL Database Installer
