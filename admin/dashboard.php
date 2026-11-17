@@ -42,7 +42,7 @@ $csrfToken = getCsrfToken();
 <html lang="km">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ផ្ទាំងគ្រប់គ្រង & គ្រប់គ្រងស្តុក - <?= e(SHOP_NAME) ?></title>
     
     <!-- Bootstrap 5 & Icons -->
@@ -54,10 +54,12 @@ $csrfToken = getCsrfToken();
     <style>
         * {
             font-family: 'Kantumruy Pro', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
         body {
             background-color: #f8fafc;
             min-height: 100vh;
+            padding-bottom: 70px;
         }
         .admin-navbar {
             background: #ffffff;
@@ -68,22 +70,22 @@ $csrfToken = getCsrfToken();
             border: 0;
             border-radius: 18px;
             transition: all 0.25s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
             overflow: hidden;
             background: #ffffff;
         }
         .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
         }
         .stat-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 14px;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.35rem;
         }
         .product-img-thumb {
             width: 58px;
@@ -95,7 +97,7 @@ $csrfToken = getCsrfToken();
         .btn-stock-toggle {
             font-size: 0.82rem;
             font-weight: 700;
-            padding: 6px 14px;
+            padding: 7px 14px;
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -103,37 +105,87 @@ $csrfToken = getCsrfToken();
             align-items: center;
             gap: 6px;
             border: none;
+            touch-action: manipulation;
         }
-        .btn-stock-toggle:hover {
-            opacity: 0.88;
-            transform: scale(1.02);
+        .btn-stock-toggle:active {
+            transform: scale(0.96);
         }
         .btn-stock-in {
             background: #10b981;
             color: #ffffff;
+            box-shadow: 0 2px 6px rgba(16, 185, 129, 0.25);
         }
         .btn-stock-out {
             background: #ef4444;
             color: #ffffff;
+            box-shadow: 0 2px 6px rgba(239, 68, 68, 0.25);
+        }
+        .filter-btn {
+            white-space: nowrap;
+            transition: all 0.2s ease;
         }
         .filter-btn.active {
             background: #f97316 !important;
             color: white !important;
             border-color: #f97316 !important;
+            box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3);
+        }
+        .mobile-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            background: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+        .mobile-card:active {
+            background: #fafafa;
+        }
+        .mobile-thumb {
+            width: 76px;
+            height: 76px;
+            object-fit: cover;
+            border-radius: 14px;
+            flex-shrink: 0;
+            border: 1px solid #f1f5f9;
+        }
+        .fab-add {
+            position: fixed;
+            bottom: 22px;
+            right: 20px;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+            box-shadow: 0 6px 20px rgba(249, 115, 22, 0.45);
+            z-index: 1040;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+        .fab-add:hover, .fab-add:active {
+            color: #ffffff;
+            transform: scale(1.08);
+            box-shadow: 0 8px 25px rgba(249, 115, 22, 0.6);
         }
         .toast-container {
             position: fixed;
             bottom: 24px;
-            right: 24px;
+            right: 20px;
+            left: 20px;
+            max-width: 400px;
+            margin: 0 auto;
             z-index: 1080;
         }
-        .table-responsive {
-            border-radius: 16px;
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
         }
-        @media (max-width: 768px) {
-            .stat-card {
-                margin-bottom: 12px;
-            }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
@@ -152,9 +204,14 @@ $csrfToken = getCsrfToken();
             </div>
         </a>
 
-        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <div class="d-flex align-items-center gap-2 d-lg-none">
+            <a class="btn btn-sm btn-orange text-white fw-bold px-3 py-1 rounded-pill" href="add_product.php">
+                <i class="bi bi-plus-lg"></i> ថែមម្ហូប
+            </a>
+            <button class="navbar-toggler border-0 shadow-none p-1" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
 
         <div class="collapse navbar-collapse" id="adminNav">
             <ul class="navbar-nav ms-auto align-items-lg-center gap-2 mt-3 mt-lg-0">
@@ -164,18 +221,18 @@ $csrfToken = getCsrfToken();
                         <?= e($_SESSION['admin_name'] ?? 'Admin') ?>
                     </span>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item d-none d-lg-block">
                     <a class="btn btn-sm btn-orange text-white fw-bold px-3 py-2 rounded-pill" href="add_product.php">
                         <i class="bi bi-plus-circle me-1"></i> បន្ថែមមុខម្ហូបថ្មី
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="btn btn-sm btn-outline-secondary px-3 py-2 rounded-pill" href="../index.php" target="_blank">
+                    <a class="btn btn-sm btn-outline-secondary px-3 py-2 rounded-pill w-100 text-start text-lg-center" href="../index.php" target="_blank">
                         <i class="bi bi-box-arrow-up-right me-1"></i> មើលមុខហាង
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="btn btn-sm btn-outline-danger px-3 py-2 rounded-pill" href="logout.php">
+                    <a class="btn btn-sm btn-outline-danger px-3 py-2 rounded-pill w-100 text-start text-lg-center" href="logout.php">
                         <i class="bi bi-box-arrow-right me-1"></i> ចាកចេញ
                     </a>
                 </li>
@@ -185,7 +242,7 @@ $csrfToken = getCsrfToken();
 </nav>
 
 <!-- Main Admin Content -->
-<div class="container-fluid px-3 px-lg-4 py-4">
+<div class="container-fluid px-3 px-lg-4 py-3 py-md-4">
 
     <!-- Flash Messages -->
     <?php if (isset($_GET['msg'])): ?>
@@ -210,76 +267,76 @@ $csrfToken = getCsrfToken();
         <?php endif; ?>
     <?php endif; ?>
 
-    <!-- Summary Statistics Cards -->
-    <div class="row g-3 mb-4">
+    <!-- Summary Statistics Cards (2x2 Grid on Mobile) -->
+    <div class="row g-2 g-md-3 mb-3 mb-md-4">
         <div class="col-6 col-lg-3">
-            <div class="stat-card p-3 p-md-4">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <span class="text-muted small fw-semibold">មុខម្ហូប/ភេសជ្ជៈសរុប</span>
+            <div class="stat-card p-3 p-md-4 h-100">
+                <div class="d-flex align-items-center justify-content-between mb-1 mb-md-2">
+                    <span class="text-muted small fw-semibold" style="font-size: 0.78rem;">មុខម្ហូបសរុប</span>
                     <div class="stat-icon bg-orange-subtle text-orange">
                         <i class="bi bi-box-seam-fill"></i>
                     </div>
                 </div>
                 <h3 class="fw-bold mb-0 text-dark" id="statTotal"><?= $totalProducts ?></h3>
-                <small class="text-muted">គ្រប់មុខទំនិញក្នុងហាង</small>
+                <small class="text-muted d-none d-sm-block">គ្រប់មុខទំនិញ</small>
             </div>
         </div>
 
         <div class="col-6 col-lg-3">
-            <div class="stat-card p-3 p-md-4">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <span class="text-muted small fw-semibold">មានក្នុងស្តុក (អាចទិញបាន)</span>
+            <div class="stat-card p-3 p-md-4 h-100">
+                <div class="d-flex align-items-center justify-content-between mb-1 mb-md-2">
+                    <span class="text-muted small fw-semibold" style="font-size: 0.78rem;">មានក្នុងស្តុក</span>
                     <div class="stat-icon bg-success-subtle text-success">
                         <i class="bi bi-check-circle-fill"></i>
                     </div>
                 </div>
                 <h3 class="fw-bold mb-0 text-success" id="statInStock"><?= $inStockCount ?></h3>
-                <small class="text-muted">កំពុងដាក់លក់លើមុខហាង</small>
+                <small class="text-muted d-none d-sm-block">កំពុងដាក់លក់</small>
             </div>
         </div>
 
         <div class="col-6 col-lg-3">
-            <div class="stat-card p-3 p-md-4">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <span class="text-muted small fw-semibold">ដាច់ស្តុក (អស់ស្តុក)</span>
+            <div class="stat-card p-3 p-md-4 h-100">
+                <div class="d-flex align-items-center justify-content-between mb-1 mb-md-2">
+                    <span class="text-muted small fw-semibold" style="font-size: 0.78rem;">ដាច់ស្តុក</span>
                     <div class="stat-icon bg-danger-subtle text-danger">
                         <i class="bi bi-x-circle-fill"></i>
                     </div>
                 </div>
                 <h3 class="fw-bold mb-0 text-danger" id="statOutOfStock"><?= $outOfStockCount ?></h3>
-                <small class="text-muted">បានបិទការកុម្ម៉ង់បណ្ដោះអាសន្ន</small>
+                <small class="text-muted d-none d-sm-block">បិទការកុម្ម៉ង់</small>
             </div>
         </div>
 
         <div class="col-6 col-lg-3">
-            <div class="stat-card p-3 p-md-4">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <span class="text-muted small fw-semibold">មុខម្ហូបពិសេស (Featured)</span>
+            <div class="stat-card p-3 p-md-4 h-100">
+                <div class="d-flex align-items-center justify-content-between mb-1 mb-md-2">
+                    <span class="text-muted small fw-semibold" style="font-size: 0.78rem;">មុខម្ហូបពិសេស</span>
                     <div class="stat-icon bg-warning-subtle text-warning">
                         <i class="bi bi-star-fill"></i>
                     </div>
                 </div>
                 <h3 class="fw-bold mb-0 text-warning"><?= $featuredCount ?></h3>
-                <small class="text-muted">បង្ហាញលើទំព័រដើម</small>
+                <small class="text-muted d-none d-sm-block">លើទំព័រមុខ</small>
             </div>
         </div>
     </div>
 
-    <!-- Management & Control Bar -->
-    <div class="card border-0 shadow-sm rounded-4 p-3 p-md-4 mb-4 bg-white">
-        <div class="row g-3 align-items-center">
+    <!-- Management & Filter Bar -->
+    <div class="card border-0 shadow-sm rounded-4 p-3 p-md-4 mb-3 mb-md-4 bg-white">
+        <div class="row g-2 g-md-3 align-items-center">
             <!-- Search Input -->
             <div class="col-12 col-md-4">
                 <div class="input-group">
                     <span class="input-group-text bg-light border-end-0">
                         <i class="bi bi-search text-muted"></i>
                     </span>
-                    <input type="text" id="adminSearchInput" class="form-control bg-light border-start-0" placeholder="ស្វែងរកតាមឈ្មោះមុខម្ហូប ឬភេសជ្ជៈ...">
+                    <input type="text" id="adminSearchInput" class="form-control bg-light border-start-0" placeholder="ស្វែងរកឈ្មោះម្ហូប ឬភេសជ្ជៈ...">
                 </div>
             </div>
 
             <!-- Category Filter -->
-            <div class="col-6 col-md-3">
+            <div class="col-12 col-sm-6 col-md-3">
                 <select id="adminCategoryFilter" class="form-select bg-light">
                     <option value="all">-- គ្រប់ប្រភេទទាំងអស់ --</option>
                     <?php foreach ($categories as $cat): ?>
@@ -288,34 +345,37 @@ $csrfToken = getCsrfToken();
                 </select>
             </div>
 
-            <!-- Stock Status Buttons -->
-            <div class="col-6 col-md-5 d-flex justify-content-md-end gap-1 flex-wrap">
-                <button type="button" class="btn btn-sm btn-outline-secondary filter-btn active rounded-pill px-3 py-2 fw-semibold" data-stock="all">
-                    ទាំងអស់ (<span id="btnCountAll"><?= $totalProducts ?></span>)
-                </button>
-                <button type="button" class="btn btn-sm btn-outline-success filter-btn rounded-pill px-3 py-2 fw-semibold" data-stock="in_stock">
-                    <i class="bi bi-check-circle me-1"></i> មានស្តុក (<span id="btnCountInStock"><?= $inStockCount ?></span>)
-                </button>
-                <button type="button" class="btn btn-sm btn-outline-danger filter-btn rounded-pill px-3 py-2 fw-semibold" data-stock="out_of_stock">
-                    <i class="bi bi-x-circle me-1"></i> ដាច់ស្តុក (<span id="btnCountOutOfStock"><?= $outOfStockCount ?></span>)
-                </button>
+            <!-- Stock Status Buttons (Horizontally Scrollable on Mobile) -->
+            <div class="col-12 col-sm-6 col-md-5">
+                <div class="d-flex gap-1 overflow-x-auto hide-scrollbar pb-1 justify-content-start justify-content-md-end">
+                    <button type="button" class="btn btn-sm btn-outline-secondary filter-btn active rounded-pill px-3 py-2 fw-semibold" data-stock="all">
+                        ទាំងអស់ (<span id="btnCountAll"><?= $totalProducts ?></span>)
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-success filter-btn rounded-pill px-3 py-2 fw-semibold" data-stock="in_stock">
+                        <i class="bi bi-check-circle me-1"></i> មានស្តុក (<span id="btnCountInStock"><?= $inStockCount ?></span>)
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-danger filter-btn rounded-pill px-3 py-2 fw-semibold" data-stock="out_of_stock">
+                        <i class="bi bi-x-circle me-1"></i> ដាច់ស្តុក (<span id="btnCountOutOfStock"><?= $outOfStockCount ?></span>)
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Products & Stock Management Table -->
-    <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+    <!-- Products & Stock Management Container -->
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white mb-4">
         <div class="card-header bg-white py-3 px-3 px-md-4 border-bottom d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center gap-2">
                 <i class="bi bi-boxes text-orange fs-5"></i>
-                <h5 class="fw-bold mb-0 text-dark">បញ្ជីមុខម្ហូប & គ្រប់គ្រងស្តុក</h5>
+                <h5 class="fw-bold mb-0 text-dark" style="font-size: 1.05rem;">បញ្ជីមុខម្ហូប & គ្រប់គ្រងស្តុក</h5>
             </div>
-            <span class="badge bg-light text-muted border px-2 py-1">
-                បង្ហាញ <span id="visibleCount"><?= $totalProducts ?></span> ក្នុងចំណោម <?= $totalProducts ?>
+            <span class="badge bg-light text-muted border px-2 py-1 small">
+                បង្ហាញ <span id="visibleCount"><?= $totalProducts ?></span> / <?= $totalProducts ?>
             </span>
         </div>
 
-        <div class="table-responsive">
+        <!-- 1. DESKTOP VIEW: Table (Hidden on Mobile) -->
+        <div class="table-responsive d-none d-md-block">
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
                     <tr>
@@ -332,7 +392,7 @@ $csrfToken = getCsrfToken();
                 </thead>
                 <tbody id="productsTableBody">
                     <?php if (empty($products)): ?>
-                        <tr id="noProductsRow">
+                        <tr>
                             <td colspan="7" class="text-center py-5 text-muted">
                                 <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary"></i>
                                 មិនទាន់មានទិន្នន័យមុខម្ហូបនៅឡើយទេ! សូមចុចប៊ូតុង "បន្ថែមមុខម្ហូបថ្មី"
@@ -359,32 +419,28 @@ $csrfToken = getCsrfToken();
                                 data-category="<?= e($p['cat_slug']) ?>"
                                 data-stock="<?= $isAvailable ? 'in_stock' : 'out_of_stock' ?>">
                                 
-                                <!-- Product Image -->
                                 <td class="text-center">
                                     <img src="<?= e($imgPath) ?>" alt="<?= e($p['name_kh']) ?>" class="product-img-thumb" loading="lazy">
                                 </td>
 
-                                <!-- Product Names -->
                                 <td>
                                     <div class="fw-bold text-dark" style="font-size: 0.98rem;"><?= e($p['name_kh']) ?></div>
                                     <small class="text-muted d-block"><?= e($p['name_en']) ?></small>
                                 </td>
 
-                                <!-- Category Badge -->
                                 <td>
                                     <span class="badge bg-light text-dark border px-2 py-1 rounded-pill">
                                         <?= e($p['cat_name']) ?>
                                     </span>
                                 </td>
 
-                                <!-- Price in KHR -->
                                 <td>
                                     <span class="fw-bold text-orange" style="font-size: 1.05rem;">
                                         <?= formatPrice($p['price']) ?>
                                     </span>
                                 </td>
 
-                                <!-- Stock Management Toggle Button (1-Click Instant AJAX) -->
+                                <!-- 1-Click Instant Stock Toggle -->
                                 <td class="text-center">
                                     <button type="button" 
                                             class="btn-stock-toggle <?= $isAvailable ? 'btn-stock-in' : 'btn-stock-out' ?>"
@@ -397,7 +453,6 @@ $csrfToken = getCsrfToken();
                                     </button>
                                 </td>
 
-                                <!-- Featured Status -->
                                 <td class="text-center">
                                     <?php if ($isFeatured): ?>
                                         <span class="text-warning" title="មុខម្ហូបពិសេស"><i class="bi bi-star-fill fs-5"></i></span>
@@ -406,17 +461,14 @@ $csrfToken = getCsrfToken();
                                     <?php endif; ?>
                                 </td>
 
-                                <!-- Action Buttons: Edit and Delete -->
                                 <td class="text-end">
                                     <div class="d-inline-flex gap-1">
-                                        <!-- Edit Button -->
                                         <a href="edit_product.php?id=<?= $p['product_id'] ?>" 
                                            class="btn btn-sm btn-outline-primary px-3 rounded-pill fw-semibold" 
                                            title="កែប្រែព័ត៌មានមុខម្ហូប">
                                             <i class="bi bi-pencil-square me-1"></i> កែប្រែ
                                         </a>
 
-                                        <!-- Delete Button with Modal Trigger -->
                                         <button type="button" 
                                                 class="btn btn-sm btn-outline-danger px-3 rounded-pill fw-semibold btn-open-delete" 
                                                 data-id="<?= $p['product_id'] ?>" 
@@ -432,12 +484,98 @@ $csrfToken = getCsrfToken();
                 </tbody>
             </table>
         </div>
+
+        <!-- 2. MOBILE VIEW: Modern Cards (Shown on Mobile Only) -->
+        <div class="d-md-none p-3" id="mobileProductsList">
+            <?php if (empty($products)): ?>
+                <div class="text-center py-5 text-muted">
+                    <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary"></i>
+                    មិនទាន់មានមុខម្ហូបនៅឡើយទេ!
+                </div>
+            <?php else: ?>
+                <?php foreach ($products as $p): ?>
+                    <?php 
+                        $img = $p['image'] ?? '';
+                        if (strpos($img, 'http') === 0) {
+                            $imgPath = $img;
+                        } elseif (!empty($img) && file_exists(__DIR__ . '/../uploads/' . $img)) {
+                            $imgPath = '../uploads/' . $img;
+                        } else {
+                            $imgPath = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100&auto=format&fit=crop&q=60';
+                        }
+                        $isAvailable = !empty($p['is_available']);
+                        $isFeatured = !empty($p['is_featured']);
+                    ?>
+                    <div class="mobile-card p-3 mb-3 product-row" 
+                         id="mobile-row-<?= $p['product_id'] ?>"
+                         data-name-kh="<?= strtolower(e($p['name_kh'])) ?>"
+                         data-name-en="<?= strtolower(e($p['name_en'])) ?>"
+                         data-category="<?= e($p['cat_slug']) ?>"
+                         data-stock="<?= $isAvailable ? 'in_stock' : 'out_of_stock' ?>">
+                         
+                        <div class="d-flex gap-3 align-items-start mb-2">
+                            <img src="<?= e($imgPath) ?>" alt="<?= e($p['name_kh']) ?>" class="mobile-thumb" loading="lazy">
+                            
+                            <div class="flex-grow-1 min-w-0">
+                                <div class="d-flex justify-content-between align-items-start gap-1">
+                                    <div class="fw-bold text-dark text-truncate" style="font-size: 1rem;"><?= e($p['name_kh']) ?></div>
+                                    <?php if ($isFeatured): ?>
+                                        <span class="text-warning small" title="មុខម្ហូបពិសេស"><i class="bi bi-star-fill"></i></span>
+                                    <?php endif; ?>
+                                </div>
+                                
+                                <small class="text-muted d-block text-truncate mb-1"><?= e($p['name_en']) ?></small>
+                                
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-light text-dark border px-2 py-1 rounded-pill small"><?= e($p['cat_name']) ?></span>
+                                    <span class="fw-bold text-orange" style="font-size: 1.05rem;"><?= formatPrice($p['price']) ?></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mobile Stock Toggle Switch (Large Touch Target) -->
+                        <div class="d-flex justify-content-between align-items-center pt-2 border-top mt-2">
+                            <span class="small text-muted fw-bold">
+                                <i class="bi bi-boxes me-1"></i> ស្តុកទំនិញ ៖
+                            </span>
+                            <button type="button" 
+                                    class="btn-stock-toggle <?= $isAvailable ? 'btn-stock-in' : 'btn-stock-out' ?>"
+                                    id="mobile-stock-btn-<?= $p['product_id'] ?>"
+                                    data-id="<?= $p['product_id'] ?>"
+                                    data-name="<?= e($p['name_kh']) ?>">
+                                <i class="bi <?= $isAvailable ? 'bi-check-circle-fill' : 'bi-x-circle-fill' ?>"></i>
+                                <span class="stock-text"><?= $isAvailable ? 'មានក្នុងស្តុក' : 'ដាច់ស្តុក' ?></span>
+                            </button>
+                        </div>
+
+                        <!-- Mobile Action Buttons -->
+                        <div class="d-flex gap-2 pt-2 mt-1">
+                            <a href="edit_product.php?id=<?= $p['product_id'] ?>" 
+                               class="btn btn-sm btn-outline-primary flex-fill rounded-pill py-2 fw-semibold">
+                                <i class="bi bi-pencil-square me-1"></i> កែប្រែ
+                            </a>
+                            <button type="button" 
+                                    class="btn btn-sm btn-outline-danger flex-fill rounded-pill py-2 fw-semibold btn-open-delete" 
+                                    data-id="<?= $p['product_id'] ?>" 
+                                    data-name="<?= e($p['name_kh']) ?>">
+                                <i class="bi bi-trash me-1"></i> លុប
+                            </button>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
     </div>
 </div>
 
+<!-- Floating Action Button (FAB) for Mobile Quick Add -->
+<a href="add_product.php" class="fab-add d-md-none" title="បន្ថែមមុខម្ហូបថ្មី" aria-label="Add Product">
+    <i class="bi bi-plus-lg"></i>
+</a>
+
 <!-- Delete Confirmation Modal -->
 <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" style="max-width: 440px;">
+    <div class="modal-dialog modal-dialog-centered px-3" style="max-width: 440px;">
         <div class="modal-content rounded-4 border-0 shadow">
             <div class="modal-body p-4 text-center">
                 <div class="bg-danger-subtle text-danger rounded-circle p-3 d-inline-flex mb-3">
@@ -457,11 +595,11 @@ $csrfToken = getCsrfToken();
                     <input type="hidden" name="product_id" id="deleteProductId" value="">
                     
                     <div class="d-flex gap-2 justify-content-center">
-                        <button type="button" class="btn btn-light px-4 rounded-pill fw-semibold" data-bs-dismiss="modal">
+                        <button type="button" class="btn btn-light px-4 rounded-pill fw-semibold flex-fill" data-bs-dismiss="modal">
                             បោះបង់
                         </button>
-                        <button type="submit" class="btn btn-danger px-4 rounded-pill fw-bold" id="btnConfirmDelete">
-                            <i class="bi bi-trash me-1"></i> បាទ/ចាស លុបចេញ
+                        <button type="submit" class="btn btn-danger px-4 rounded-pill fw-bold flex-fill" id="btnConfirmDelete">
+                            <i class="bi bi-trash me-1"></i> លុបចេញ
                         </button>
                     </div>
                 </form>
@@ -472,9 +610,9 @@ $csrfToken = getCsrfToken();
 
 <!-- Toast Container for Notifications -->
 <div class="toast-container">
-    <div id="liveToast" class="toast align-items-center text-white bg-dark border-0 rounded-4 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+    <div id="liveToast" class="toast align-items-center text-white bg-dark border-0 rounded-4 shadow-lg w-100" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="d-flex">
-            <div class="toast-body d-flex align-items-center gap-2" id="toastMessage">
+            <div class="toast-body d-flex align-items-center gap-2 py-3" id="toastMessage">
                 <i class="bi bi-check-circle-fill text-success fs-5"></i>
                 <span>បានកែប្រែដោយជោគជ័យ!</span>
             </div>
@@ -498,7 +636,7 @@ function showToast(message, isSuccess = true) {
     toastObj.show();
 }
 
-// 1. Live Filter and Search
+// 1. Live Filter and Search (Works on both desktop table and mobile cards)
 const searchInput = document.getElementById('adminSearchInput');
 const categoryFilter = document.getElementById('adminCategoryFilter');
 const filterBtns = document.querySelectorAll('.filter-btn');
@@ -510,7 +648,7 @@ let currentStockFilter = 'all';
 function applyFilters() {
     const query = searchInput.value.toLowerCase().trim();
     const selectedCategory = categoryFilter.value;
-    let visibleCount = 0;
+    let desktopVisibleCount = 0;
 
     rows.forEach(row => {
         const nameKh = row.getAttribute('data-name-kh') || '';
@@ -524,13 +662,15 @@ function applyFilters() {
 
         if (matchQuery && matchCategory && matchStock) {
             row.style.display = '';
-            visibleCount++;
+            if (!row.id.startsWith('mobile-')) {
+                desktopVisibleCount++;
+            }
         } else {
             row.style.display = 'none';
         }
     });
 
-    visibleCountEl.textContent = visibleCount;
+    visibleCountEl.textContent = desktopVisibleCount;
 }
 
 searchInput.addEventListener('input', applyFilters);
@@ -545,16 +685,21 @@ filterBtns.forEach(btn => {
     });
 });
 
-// 2. Instant 1-Click Stock Toggle (AJAX)
+// 2. Instant 1-Click Stock Toggle (AJAX) - Syncs both Desktop and Mobile UI
 document.querySelectorAll('.btn-stock-toggle').forEach(btn => {
     btn.addEventListener('click', async function() {
         const productId = this.getAttribute('data-id');
         const productName = this.getAttribute('data-name');
         
-        // Show spinning indicator
-        const originalHtml = this.innerHTML;
-        this.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status"></span> កំពុងកែប្រែ...';
-        this.disabled = true;
+        const desktopBtn = document.getElementById(`stock-btn-${productId}`);
+        const mobileBtn = document.getElementById(`mobile-stock-btn-${productId}`);
+        const desktopRow = document.getElementById(`row-${productId}`);
+        const mobileRow = document.getElementById(`mobile-row-${productId}`);
+
+        // Set spinning state
+        const loadingHtml = '<span class="spinner-border spinner-border-sm me-1" role="status"></span> កែប្រែ...';
+        if (desktopBtn) { desktopBtn.innerHTML = loadingHtml; desktopBtn.disabled = true; }
+        if (mobileBtn) { mobileBtn.innerHTML = loadingHtml; mobileBtn.disabled = true; }
 
         try {
             const formData = new FormData();
@@ -570,39 +715,38 @@ document.querySelectorAll('.btn-stock-toggle').forEach(btn => {
 
             const data = await res.json();
             if (data.success) {
-                const row = document.getElementById(`row-${productId}`);
-                if (data.is_available) {
-                    this.className = 'btn-stock-toggle btn-stock-in';
-                    this.innerHTML = '<i class="bi bi-check-circle-fill"></i> <span class="stock-text">មានក្នុងស្តុក</span>';
-                    if (row) row.setAttribute('data-stock', 'in_stock');
-                } else {
-                    this.className = 'btn-stock-toggle btn-stock-out';
-                    this.innerHTML = '<i class="bi bi-x-circle-fill"></i> <span class="stock-text">ដាច់ស្តុក</span>';
-                    if (row) row.setAttribute('data-stock', 'out_of_stock');
-                }
+                const newHtml = data.is_available 
+                    ? '<i class="bi bi-check-circle-fill"></i> <span class="stock-text">មានក្នុងស្តុក</span>' 
+                    : '<i class="bi bi-x-circle-fill"></i> <span class="stock-text">ដាច់ស្តុក</span>';
+                const newClass = data.is_available ? 'btn-stock-toggle btn-stock-in' : 'btn-stock-toggle btn-stock-out';
+                const newStockAttr = data.is_available ? 'in_stock' : 'out_of_stock';
 
-                // Update Counters
+                if (desktopBtn) { desktopBtn.className = newClass; desktopBtn.innerHTML = newHtml; }
+                if (mobileBtn) { mobileBtn.className = newClass; mobileBtn.innerHTML = newHtml; }
+                if (desktopRow) { desktopRow.setAttribute('data-stock', newStockAttr); }
+                if (mobileRow) { mobileRow.setAttribute('data-stock', newStockAttr); }
+
+                // Update Header Counters
                 document.getElementById('statInStock').textContent = data.count_in_stock;
                 document.getElementById('statOutOfStock').textContent = data.count_out_of_stock;
                 document.getElementById('btnCountInStock').textContent = data.count_in_stock;
                 document.getElementById('btnCountOutOfStock').textContent = data.count_out_of_stock;
 
-                showToast(`បានប្ដូរស្ថានភាពស្តុក "${productName}" ទៅជា "${data.status_text}"!`);
+                showToast(`បានប្ដូរ "${productName}" ទៅជា "${data.status_text}"!`);
                 applyFilters();
             } else {
-                this.innerHTML = originalHtml;
                 showToast(data.error || 'មានបញ្ហាក្នុងការកែប្រែស្តុក', false);
             }
         } catch (err) {
-            this.innerHTML = originalHtml;
             showToast('មិនអាចភ្ជាប់ទៅកាន់ Server បានទេ', false);
         } finally {
-            this.disabled = false;
+            if (desktopBtn) desktopBtn.disabled = false;
+            if (mobileBtn) mobileBtn.disabled = false;
         }
     });
 });
 
-// 3. Delete Modal Trigger
+// 3. Delete Modal Trigger (Desktop & Mobile)
 const deleteModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
 const deleteItemNameEl = document.getElementById('deleteItemName');
 const deleteProductIdInput = document.getElementById('deleteProductId');

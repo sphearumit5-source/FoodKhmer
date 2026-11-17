@@ -329,7 +329,7 @@ $csrfToken = getCsrfToken();
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <title>កែប្រែផលិតផល - Admin</title>
 
@@ -391,7 +391,7 @@ $csrfToken = getCsrfToken();
 
 <body class="bg-light">
 
-<div class="container py-4" style="max-width: 850px;">
+<div class="container py-3 py-md-4 px-3" style="max-width: 850px;">
 
     <!-- HEADER -->
     <div class="mb-4">
@@ -439,7 +439,7 @@ $csrfToken = getCsrfToken();
 
 
     <!-- FORM CARD -->
-    <div class="card border-0 shadow-sm rounded-4 p-4">
+    <div class="card border-0 shadow-sm rounded-4 p-3 p-md-4 bg-white">
 
         <form
             method="POST"
@@ -755,7 +755,7 @@ $csrfToken = getCsrfToken();
 
                 <button
                     type="submit"
-                    class="btn btn-orange px-4 fw-bold"
+                    class="btn btn-orange px-4 py-2 fw-bold flex-fill flex-md-grow-0 rounded-pill"
                 >
 
                     <i class="bi bi-save me-1"></i>
@@ -767,7 +767,7 @@ $csrfToken = getCsrfToken();
 
                 <a
                     href="dashboard.php"
-                    class="btn btn-outline-secondary px-3"
+                    class="btn btn-outline-secondary px-4 py-2 fw-semibold flex-fill flex-md-grow-0 rounded-pill text-center"
                 >
 
                     បោះបង់

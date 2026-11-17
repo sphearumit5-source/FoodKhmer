@@ -29,8 +29,8 @@ if (!verifyCsrfToken($_POST['csrf_token'] ?? '')) {
     die('សុពលភាព Token មិនត្រឹមត្រូវ (CSRF Error)');
 }
 
-$productId = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
-if (!$productId || $productId <= 0) {
+$productId = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
+if ($productId <= 0) {
     if ($isAjax) {
         header('Content-Type: application/json; charset=UTF-8');
         echo json_encode(['success' => false, 'error' => 'លេខសម្គាល់ផលិតផលមិនត្រឹមត្រូវ']);

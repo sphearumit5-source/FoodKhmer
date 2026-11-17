@@ -141,7 +141,7 @@ $csrfToken = getCsrfToken();
 <html lang="km">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <title>បន្ថែមមុខម្ហូបថ្មី - Admin</title>
 
@@ -157,27 +157,27 @@ $csrfToken = getCsrfToken();
 
 <body class="bg-light">
 
-<div class="container py-4" style="max-width: 850px;">
+<div class="container py-3 py-md-4 px-3" style="max-width: 850px;">
 
-    <div class="mb-4">
+    <div class="mb-3 mb-md-4">
         <a href="dashboard.php" class="text-decoration-none text-muted small">
             <i class="bi bi-arrow-left"></i>
             ត្រឡប់ទៅផ្ទាំងគ្រប់គ្រងស្តុក
         </a>
 
-        <h4 class="fw-bold mt-1">
+        <h4 class="fw-bold mt-1 text-dark">
             បន្ថែមមុខម្ហូប ឬភេសជ្ជៈថ្មី
         </h4>
     </div>
 
     <?php if (!empty($error)): ?>
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger rounded-4" role="alert">
             <i class="bi bi-exclamation-triangle-fill me-1"></i>
             <?= e($error) ?>
         </div>
     <?php endif; ?>
 
-    <div class="card border-0 shadow-sm rounded-4 p-4">
+    <div class="card border-0 shadow-sm rounded-4 p-3 p-md-4 bg-white">
 
         <form method="POST" action="add_product.php" enctype="multipart/form-data">
 
@@ -364,12 +364,12 @@ $csrfToken = getCsrfToken();
 
             <div class="d-flex gap-2">
 
-                <button type="submit" class="btn btn-orange px-4 fw-bold">
+                <button type="submit" class="btn btn-orange px-4 py-2 fw-bold flex-fill flex-md-grow-0 rounded-pill">
                     <i class="bi bi-save me-1"></i>
                     រក្សាទុក
                 </button>
 
-                <a href="dashboard.php" class="btn btn-outline-secondary px-3">
+                <a href="dashboard.php" class="btn btn-outline-secondary px-4 py-2 fw-semibold flex-fill flex-md-grow-0 rounded-pill text-center">
                     បោះបង់
                 </a>
 
